@@ -15,6 +15,8 @@ class MainWindow(QtWidgets.QWidget):
         layout = QtWidgets.QVBoxLayout()
         self.input_combo = QtWidgets.QComboBox()
         self.output_combo = QtWidgets.QComboBox()
+        self.monitor_cb = QtWidgets.QCheckBox('Hear myself')
+        self.monitor_cb.setChecked(False)
         self.start_btn = QtWidgets.QPushButton('Start')
         self.stop_btn = QtWidgets.QPushButton('Stop')
         self.level_bar = QtWidgets.QProgressBar()
@@ -23,6 +25,7 @@ class MainWindow(QtWidgets.QWidget):
         layout.addWidget(self.input_combo)
         layout.addWidget(QtWidgets.QLabel('Output'))
         layout.addWidget(self.output_combo)
+        layout.addWidget(self.monitor_cb)
         layout.addWidget(self.start_btn)
         layout.addWidget(self.stop_btn)
         layout.addWidget(self.level_bar)
@@ -50,6 +53,8 @@ class MainWindow(QtWidgets.QWidget):
             'index_path': 'models/model.index',
             'sg_input_device': self.input_combo.currentText(),
             'sg_output_device': self.output_combo.currentText()
+            'sg_output_device': self.output_combo.currentText(),
+            'monitor': self.monitor_cb.isChecked()
         }
         try:
             requests.post(f'{API_URL}/config', json=data)
